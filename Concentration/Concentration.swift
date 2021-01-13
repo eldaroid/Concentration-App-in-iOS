@@ -9,11 +9,32 @@ import Foundation
 
 class Concentration
 {
-    var cards = Array<Card>()
+    private (set) var cards = Array<Card>()
     
-    var indexOfOneAndOnlyFacedUpCard: Int?
+    private var indexOfOneAndOnlyFacedUpCard: Int? {
+        get {
+            var foundIndex: Int?
+                for index in cards.indices {
+                    if cards[index].isFaceUp {
+                        if foundIndex == nil {
+                            foundIndex = index
+                        } else {
+                            return nil
+                        }
+                    }
+                }
+            return foundIndex
+        }
+        set (newValue) {
+            for index in cards.indices {
+                cards[index].isFaceUp = (newValue == index)
+            }
+            
+        }
+    }
     
     func chooseCard(at index: Int) {
+        assert(cards.indices.contains(index), "Concentration.chooseCard(at: \(index))")
 //        if cards[index].isFaceUp {
 //            cards[index].isFaceUp = false
 //        } else {
@@ -27,23 +48,18 @@ class Concentration
                     cards[index].isMathched = true
                 }
                 cards[index].isFaceUp = true
-                indexOfOneAndOnlyFacedUpCard = nil
             } else {
                 // either no cards or 2 cards are face up
-                for flipDownIndex in cards.indices {
-                    cards[flipDownIndex].isFaceUp = false
-                }
-                cards[index].isFaceUp = true
                 indexOfOneAndOnlyFacedUpCard = index
             }
         }
     }
     
     init(numberOfPairs: Int) {
+        assert(numberOfPairs > 0, "Concentration.init(at: \(numberOfPairs))")
         for _ in 1...numberOfPairs {
             let card = Card()
             cards += [card, card]
         }
     }
 }
-

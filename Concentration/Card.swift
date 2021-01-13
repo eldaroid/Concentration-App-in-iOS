@@ -13,9 +13,9 @@ struct Card {
     var isMathched = false
     var identifier: Int
     
-    static var identifierFactory = 0
+    private static var identifierFactory = 0
     
-    static func getUniqueUdentifier() -> Int {
+    private static func getUniqueUdentifier() -> Int {
         Card.identifierFactory += 1
         return Card.identifierFactory
     }
