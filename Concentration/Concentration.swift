@@ -35,11 +35,6 @@ class Concentration
     
     func chooseCard(at index: Int) {
         assert(cards.indices.contains(index), "Concentration.chooseCard(at: \(index))")
-//        if cards[index].isFaceUp {
-//            cards[index].isFaceUp = false
-//        } else {
-//            cards[index].isFaceUp = true
-//        }
         if !cards[index].isMathched {
             if let matchedIndex = indexOfOneAndOnlyFacedUpCard, matchedIndex != index {
                 // check if cards match
@@ -61,5 +56,11 @@ class Concentration
             let card = Card()
             cards += [card, card]
         }
+    }
+    
+    func setNewGame(index: Int) {
+        cards[index].isFaceUp = false
+        cards[index].isMathched = false
+    
     }
 }
