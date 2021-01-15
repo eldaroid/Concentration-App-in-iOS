@@ -56,11 +56,14 @@ class Concentration
             let card = Card()
             cards += [card, card]
         }
+        cards.shuffle()
     }
     
-    func setNewGame(index: Int) {
-        cards[index].isFaceUp = false
-        cards[index].isMathched = false
-    
+    func setNewGame() {
+        for index in cards.indices {
+            cards[index].isFaceUp = false
+            cards[index].isMathched = false
+        }
+        cards.shuffle()
     }
 }
