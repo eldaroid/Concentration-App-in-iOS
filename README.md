@@ -1,32 +1,3 @@
 ## Concentration-App-in-iOS
 
-Concentration game development stage by stage:
-
-        1.Project creation and configuration
-  
-        2.Creating UIButtons and Labels
-  
-  
-  
-  
-  
-  
-# 1. Project creation and configuration
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+To familiarize yourself with the application development process: [Wiki](https://github.com/eldaroid/Concentration-App-in-iOS/wiki)
