@@ -24,6 +24,7 @@ class ViewController: UIViewController {
 @IBAction func touchNewGame(_ sender: UIButton) {
     game.setNewGame()
     updateViewFromModel()
+    indexTheme = keys.count.ar4random
     flipCount = 0
 }
 
@@ -65,6 +66,14 @@ class ViewController: UIViewController {
 //    }
 
     //emojiChoice in Stanford course
+    
+    private var indexTheme = 0 {
+        didSet {
+            emojiChoice = emojiThemes[keys[indexTheme]]!
+            emojiDictionary = [Int: String]()
+        }
+    }
+    
     private var emojiChoice: Array <String> = ["😜", "👻", "🎃", "🧠", "🙈", "🤡", "💦", "🍎", "🌧"]
 
     private var keys: [String] { return Array(emojiThemes.keys) }
