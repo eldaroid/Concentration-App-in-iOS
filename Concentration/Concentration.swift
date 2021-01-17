@@ -11,6 +11,17 @@ class Concentration
 {
     private (set) var cards = Array<Card>()
     
+    private struct Points {
+        static let matchBonuses = 2
+        static let missBonuses = 1
+    }
+    
+    private (set) var score = 0
+    
+    private var seenCard: Set<Int> = []
+    
+    private (set) var flipCount = 0
+    
     private var indexOfOneAndOnlyFacedUpCard: Int? {
         get {
             var foundIndex: Int?
@@ -36,11 +47,22 @@ class Concentration
     func chooseCard(at index: Int) {
         assert(cards.indices.contains(index), "Concentration.chooseCard(at: \(index))")
         if !cards[index].isMathched {
+            flipCount += 1
             if let matchedIndex = indexOfOneAndOnlyFacedUpCard, matchedIndex != index {
                 // check if cards match
                 if cards[matchedIndex].identifier == cards[index].identifier {
                     cards[matchedIndex].isMathched = true
                     cards[index].isMathched = true
+                    score += Points.matchBonuses
+                } else {
+                    if seenCard.contains(index) {
+                        score -= Points.missBonuses
+                    }
+                    if seenCard.contains(matchedIndex) {
+                        score -= Points.missBonuses
+                    }
+                    seenCard.insert(index)
+                    seenCard.insert(matchedIndex)
                 }
                 cards[index].isFaceUp = true
             } else {
@@ -60,6 +82,9 @@ class Concentration
     }
     
     func setNewGame() {
+        score = 0
+        flipCount = 0
+        seenCard = []
         for index in cards.indices {
             cards[index].isFaceUp = false
             cards[index].isMathched = false
