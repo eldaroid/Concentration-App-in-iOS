@@ -7,12 +7,16 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ConcentrationViewController: UIViewController {
 
     private lazy var game: Concentration = Concentration(numberOfPairs: numberOfPairs)
 
     private var numberOfPairs: Int {
-        return(cardButtons.count + 1) / 2
+        if cardButtons != nil {
+            return(cardButtons.count + 1) / 2 }
+        else {
+            return 19
+        }
     }
     
     @IBAction func touchNewGame(_ sender: UIButton) {
@@ -51,30 +55,35 @@ class ViewController: UIViewController {
     private var cardBackgroundColor = UIColor.orange
     
     private func updateViewFromModel() {
-        for index in cardButtons.indices {
-            let button = cardButtons[index]
-            let card = game.cards[index]
-            if card.isFaceUp {
-                button.setTitle(emoji(for: card), for: UIControl.State.normal)
-                button.backgroundColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
-            } else {
-                button.setTitle("", for: UIControl.State.normal)
-                button.backgroundColor = card.isMathched ? #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 0) : cardBackgroundColor
+        if cardButtons != nil {
+            for index in cardButtons.indices {
+                let button = cardButtons[index]
+                let card = game.cards[index]
+                if card.isFaceUp {
+                    button.setTitle(emoji(for: card), for: UIControl.State.normal)
+                    button.backgroundColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
+                } else {
+                    button.setTitle("", for: UIControl.State.normal)
+                    button.backgroundColor = card.isMathched ? #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 0) : cardBackgroundColor
+                }
+                flipCountLabel.text = "Flips: \(game.flipCount)"
+                scoreLabel.text = "Score: \(game.score)"
             }
-            flipCountLabel.text = "Flips: \(game.flipCount)"
-            scoreLabel.text = "Score: \(game.score)"
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        indexTheme = emojiThemes.count.ar4random
+        indexTheme = (theme == -6) ? emojiThemes.count.ar4random : theme
         updateViewFromModel()
     }
     
     private var indexTheme = 0 {
         didSet {
-            titleLable.text = emojiThemes[indexTheme].name
+            DispatchQueue.main.async {
+                self.titleLable.text = self.emojiThemes[self.indexTheme].name
+            }
+//            titleLable.text = emojiThemes[indexTheme].name
             emojiDictionary = [Int: String]()
             
             emojiChoice = emojiThemes[indexTheme].emojis
@@ -92,7 +101,16 @@ class ViewController: UIViewController {
         titleLable.textColor = cardBackgroundColor
     }
     
-    private var emojiChoice: Array <String> = ["😜", "👻", "🎃", "🧠", "🙈", "🤡", "💦", "🍎", "🌧"]
+    var theme: Int = -6 {
+        didSet {
+            emojiChoice = emojiThemes[theme].emojis
+            emojiDictionary = [Int: String]() 
+            indexTheme = theme
+            updateViewFromModel()
+        }
+    }
+    
+    var emojiChoice: Array <String> = ["😜", "👻", "🎃", "🧠", "🙈", "🤡", "💦", "🍎", "🌧"]
 
 //    private var keys: [String] { return Array(emojiThemes.keys) }
 
@@ -106,7 +124,7 @@ class ViewController: UIViewController {
                emojis: ["😄", "😆", "😊", "😃", "☺️", "😏", "😍", "😘", "😚", "😳", "😌", "😆"],
                viewColor: #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1),
                cardColor: #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)),
-         Theme(name: "Cat",
+         Theme(name: "Cats",
                emojis: ["😺", "😸", "😻", "😽", "😼", "🙀", "😿", "😹", "😾", "👹"],
                viewColor: #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1),
                cardColor: #colorLiteral(red: 0.1764705926, green: 0.01176470611, blue: 0.5607843399, alpha: 1)),
