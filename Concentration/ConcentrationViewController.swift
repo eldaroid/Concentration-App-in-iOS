@@ -44,7 +44,7 @@ class ConcentrationViewController: UIViewController {
 
     @IBOutlet weak var titleLable: UILabel!
     
-    private struct Theme {
+    struct Theme {
         var name: String
         var emojis: [String]
         var viewColor: UIColor
@@ -114,8 +114,7 @@ class ConcentrationViewController: UIViewController {
 
 //    private var keys: [String] { return Array(emojiThemes.keys) }
 
-    
-    private var emojiThemes: [Theme] =
+    var emojiThemes: [Theme] =
         [Theme(name: "Love",
                emojis: ["💛", "💙", "💜", "❤️", "💚", "💔", "💓", "💗", "💕", "💞", "💘", "💖"],
                viewColor: #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1),
