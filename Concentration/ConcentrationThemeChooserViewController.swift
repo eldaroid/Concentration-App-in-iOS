@@ -9,6 +9,10 @@ import UIKit
 
 class ConcentrationThemeChooserViewController: UIViewController {
     
+    @IBAction func chooseTheme(_ sender: Any) {
+        performSegue(withIdentifier: "Choose Theme", sender: sender)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // identifier check
         if segue.identifier == "Choose Theme" {
